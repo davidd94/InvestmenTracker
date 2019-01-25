@@ -1,0 +1,343 @@
+/* BACKGROUND STYLE */
+
+#background {
+    overflow: scroll;
+}
+
+/* TABLE STYLES */
+
+table {
+    border: 1px solid pink;
+    text-align: center;
+    background-color: white;
+}
+
+table tr th {
+    border: 1px solid black;
+}
+
+/* LEFT TABLE HEADER STYLES */
+
+.leftusertable {
+    grid-column: 1 / span 4;
+    grid-row: 4 / span 1;
+    position: relative;
+    z-index: 300;
+}
+
+.lefttab {
+    border-spacing: 0;
+}
+
+.leftusertableheader {
+    overflow: hidden;
+}
+
+#stockcol {
+    min-width: 100px;
+    max-width: 100px;
+    width: 100px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+#compcol {
+    min-width: 250px;
+    max-width: 250px;
+    width: 250px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+#pricecol {
+    min-width: 110px;
+    max-width: 110px;
+    width: 110px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+#changecol {
+    min-width: 150px;
+    max-width: 150px;
+    width: 150px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+#shsflcol, #shsoutcol {
+    min-width: 75px;
+    max-width: 75px;
+    width: 75px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+#volcol {
+    min-width: 100px;
+    max-width: 100px;
+    width: 100px;
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+}
+
+.addstockboxloc {
+    position: relative;
+    margin: 15px 0 80px 10px;
+}
+
+#addstockbox {
+    text-align: center;
+    outline: none;
+    width: 15%;
+    height: 15px;
+    font-family: "Raleway" Times, serif;
+    font-size: 14px;
+}
+
+#addstockbutton {
+    position: absolute;
+    opacity: 0.5;
+    outline: none;
+    height: 25px;
+    width: 25px;
+    margin: -2.5px 0 0 10px;
+}
+
+.expandarrowloc {
+    position: relative;
+    grid-row: 4 / span 1;
+    grid-column: 5 / span 1;
+    left: -30px;
+}
+
+#expandarrow {
+    height: 60px;
+    width: 50px;
+    margin-left: -35px;
+    margin-top: -7px;
+    position: relative;
+    z-index: 500;
+    cursor: pointer;
+}
+
+/* RIGHT TABLE STYLES */
+
+.rightusertable {
+    grid-column: 5 / span 4;
+    grid-row: 4 / span 1;
+    position: relative;
+    z-index: 1;
+    transition: all 1500ms ease;
+    margin-left: -970px;
+    transform: scale(0.75);
+}
+
+.righttab {
+    border-spacing: 0;
+}
+
+#datecol {
+    max-width: 165px;
+    min-width: 165px;
+    width: 165px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#purchasecol {
+    max-width: 130px;
+    min-width: 130px;
+    width: 130px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#quantitycol {
+    max-width: 120px;
+    min-width: 120px;
+    width: 120px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#totalcol {
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#totgains {
+    max-width: 100px;
+    min-width: 100px;
+    width: 100px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#gainscol {
+    max-width: 90px;
+    min-width: 90px;
+    width: 90px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+#notescol {
+    max-width: 200px;
+    min-width: 200px;
+    width: 200px;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+}
+
+/* NEWLY CREATED LEFT ROWS */
+
+.createdstock {
+    color: black;
+}
+
+.lefttab tr td {
+    border: 0.5px solid lightgrey;
+    height: 40px;
+    font-family: "Raleway" Times, serif;
+    font-size: 16px;
+}
+
+/* NEWLY CREATED RIGHT ROWS */
+
+.createdrightrow td {
+    border: 0.5px solid lightgrey;
+    max-height: 40px;
+    min-height: 40px;
+    height: 40px;
+    font-family: "Raleway" Times, serif;
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.lefttab button {
+    width: 20px;
+    height: 20px;
+    background: url(../static/deleteicon.jpg);
+    background-size: cover;
+    outline: none;
+    position: relative;
+    float: left;
+    top: -8px;
+    left: 2px;
+    opacity: 0.30;
+}
+
+.righttab button {
+    width: 20px;
+    height: 20px;
+    background: url(../static/editicon.png);
+    background-size: cover;
+    outline: none;
+    position: relative;
+    z-index: 1000;
+    float: right;
+    opacity: 0;
+}
+
+/* RIGHT ROW - EDIT ICON */
+
+.righttab .createddate .dateicon, .righttab .createpurchase .purchaseicon, .righttab .createquantity .quantityicon, .righttab .createnotes .notesicon {
+    top: 2px;
+    right: 3px;
+    position: absolute;
+}
+
+/* RIGHT ROW - TABLE DATA TEXT */
+
+.datetext, .purchasetext {
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    width: 50%;
+    overflow: hidden;
+}
+
+.quantitytext {
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    width: 50%;
+    overflow: hidden;
+}
+
+.notestext {
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 85%;
+    overflow: hidden;
+}
+
+/* RIGHT ROW - TABLE DATA INPUT (EDITOR) */
+
+.dateinput {
+    top: 0;
+    left: -10px;
+    outline: none;
+    border: 1px solid lightgrey;
+    width: 75%;
+    position: relative;
+    z-index: 110;
+    display: none;
+    text-align: center;
+}
+
+.purchaseinput {
+    top: 0px;
+    left: 0px;
+    outline: none;
+    border: 1px solid lightgrey;
+    width: 40%;
+    position: relative;
+    z-index: 110;
+    display: none;
+    text-align: center;
+}
+
+.quantityinput {
+    top: 0px;
+    outline: none;
+    border: 1px solid lightgrey;
+    width: 70%;
+    position: relative;
+    z-index: 110;
+    display: none;
+    text-align: center;
+}
+
+.notesinput {
+    top: 0px;
+    outline: none;
+    border: 1px solid lightgrey;
+    width: 70%;
+    position: relative;
+    z-index: 110;
+    display: none;
+    text-align: center;
+}

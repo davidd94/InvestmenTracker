@@ -1,0 +1,232 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='Styles-Homepage.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+<div class="searchbox">
+    <input type="button" value="Stock Search" id="search">
+    <div class="searchdropdown">
+            <p id="compare">Compare(Coming soon)</p>
+            <p id="testing">Testing</p>
+            <p id="none">None</p>
+    </div>
+</div>
+<div class="tickerbox">
+    <input type="text" class="ticker" placeholder="AAPL or KO & Hit Enter" maxlength="5" 
+    autocorrect="off" spellcheck="false" oninput="this.value = this.value.toUpperCase()" 
+    onfocus="this.placeholder =''" onblur="this.placeholder='AAPL or KO & Hit Enter'">
+</div>
+
+<div class="quickstockbox">
+    <p class="quickstockboxclose">[X]  Close</p>
+    <div class="quickstockpricebox">
+        <p class="quickstockprice">Loading...</p>
+        <img class="stockincreasearrow" src='../static/greenuparrow.png'>
+        <img class="stockdecreasearrow" src='../static/reddownarrow.png'>
+        <p class="quickstockpricediff">Loading...</p>
+        <p class="quickstockname">Loading...</p>
+        <p class="quickstockticker">...</p>
+    </div>
+    <table class="quickstocktablebox-1">
+        <tbody>
+            <tr>
+                <td class="quickstock-c1">Index</td>
+                <td class="Indexname"></td>
+                <td class="quickstock-c2">P/E</td>
+                <td class="PEval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Market Cap</td>
+                <td class="Marketcap"></td>
+                <td class="quickstock-c2">P/E Growth</td>
+                <td class="PEgrowth"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Income</td>
+                <td class="Incomeval"></td>
+                <td class="quickstock-c2">P/S</td>
+                <td class="PSval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Book Value</td>
+                <td class="BVal"></td>
+                <td class="quickstock-c2">P/BV</td>
+                <td class="PBval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Cash</td>
+                <td class="Cashval"></td>
+                <td class="quickstock-c2">P/C</td>
+                <td class="PCval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Dividend</td>
+                <td class="Dividendval"></td>
+                <td class="quickstock-c2">P/FCF</td>
+                <td class="PFCFval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Dividend %</td>
+                <td class="Dividendperc"></td>
+                <td class="quickstock-c2">Debt/Eq</td>
+                <td class="debttoeq"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Employees</td>
+                <td class="totalemployees"></td>
+                <td class="quickstock-c2">LT Debt/Eq</td>
+                <td class="LTdebttoeq"></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="quickstocktablebox-2">
+        <tbody>
+            <tr>
+                <td class="quickstock-c1">EPS (ttm)</td>
+                <td class="EPS-ttm"></td>
+                <td class="quickstock-c2">Insider Own</td>
+                <td class="insiderown"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS est. next Y</td>
+                <td class="EPS-EY"></td>
+                <td class="quickstock-c2">Insider Trans</td>
+                <td class="Insidertrans"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS est. next Q</td>
+                <td class="EPS-EQ"></td>
+                <td class="quickstock-c2">Institu Own</td>
+                <td class="Instiown"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS grow this Y</td>
+                <td class="EPS-GY"></td>
+                <td class="quickstock-c2">Institu Trans</td>
+                <td class="Institrans"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS grow next Y</td>
+                <td class="EPS-GY2"></td>
+                <td class="quickstock-c2">ROA</td>
+                <td class="ROAval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS grow next 5Y</td>
+                <td class="EPS-G5Y"></td>
+                <td class="quickstock-c2">ROE</td>
+                <td class="ROEval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS grow past 5Y</td>
+                <td class="EPS-P5Y"></td>
+                <td class="quickstock-c2">ROI</td>
+                <td class="ROIval"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Sales grow past 5Y</td>
+                <td class="Sales-P5Y"></td>
+                <td class="quickstock-c2">Gross Margin</td>
+                <td class="Grossmargin"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">Sales grow Q</td>
+                <td class="Sales-GQ"></td>
+                <td class="quickstock-c2">Oper. Margin</td>
+                <td class="Opermargin"></td>
+            </tr>
+            <tr>
+                <td class="quickstock-c1">EPS grow Q</td>
+                <td class="EPS-GQ"></td>
+                <td class="quickstock-c2">Profit Margin</td>
+                <td class="Profitmargin"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% if name %}
+<div class="welcomebox">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <div class="welcomecontent">
+        <p class="welcomemsg">
+                Welcome {{ name }} to your online personal investment portfolio! This website is still under development so there will be issues 
+            and unfinished features. If you find any major bugs or vulnerabilities that can potentially expose your personal 
+            information, please shoot me an email at InvestmenTracker1@gmail.com
+        </p>
+        <p class="welcomename">David Duong</p>
+        <p class="welcomesignoff">Founder and CEO of InvestmenTracker</p>
+    </div>
+</div>
+
+{% else %}
+<div class="acctnote" id='incorrlogin'><p id='incorrectlogin'>Your User Name / Password does not match! Please try again.</p></div>
+<div class="acctnote" id='failedloginbox'><p id='failedlogin'>You have exceeded the max login attempts! Please use "Forgot Password" to restore your account.</p></div>
+<div class="acctnote" id="success"><p id='acctsuccess'>Your account has been successfully created! Please check your email.</p></div>
+<div class="acctnote" id="acctconfirm"><p id='acctconfirmtext'>Please check your email to confirm your account before logging in.</p></div>
+<div class="acctnote" id="success2"><p id='pwsuccess'>A password reset link has been sent to your email.</p></div>
+<div class="acctnote" id="exemail"><p id='existingemail'>That email address has been used already!</p></div>
+<div class="acctnote" id="exname"><p id='existingusername'>That user name has been taken already.</p></div>
+
+<div class="loginbox">
+    <div class="logintext">Account Login</div>
+    <div class="usertext">User Name:</div>
+    <div class="passwordtext">Password:</div>
+    <div class="loginuserform">
+        <input type="text" name="loginusername" placeholder="Enter user name..." class="userinfo" minlength="5" maxlength="15" autocomplete="off" onfocus="this.placeholder=''" onblur="this.placeholder='Enter user name...'">
+        <input type="password" name="loginuserpw" class="passwordinfo" id="hiddenpw" placeholder="Insert your password" minlength="5" maxlength="100" onfocus="this.placeholder =''" onblur="this.placeholder='Insert your password'">
+        <input type="checkbox" id="onclickpw" onclick='hideLoginPW()'><text class="showpwtxt">Show Password</text>
+        <input type="submit" class="submitbutton" value="Submit">
+    </div>
+    <div class="createnewuser">Create a New Account
+        <img src="../static/users.svg">
+    </div>
+    <div class="forgotpw">Forgot Password?
+        <img src='../static/question-circle.svg'>
+    </div>
+</div>
+<div class="newacctbox invisible">
+    <div class="backarrow1">
+        <img src="https://s3.amazonaws.com/codecademy-content/courses/jquery/audit/images/right-arrow.svg" class="backarrow2">
+    </div>
+    <p class="backtext">Back</p>
+    <div class="newaccttitle">Create New Account</div>
+    <input type="text" placeholder="User Name" class="newusername" minlength="5" maxlength="15" onfocus="this.placeholder =''" onblur="this.placeholder='User name'">
+    <p class="userreqtext">Your user name must be 5-15 characters long with no special characters.</p>
+    <input type="text" placeholder="First Name" class="newfirstname" minlength="1" maxlength="20" onfocus="this.placeholder =''" onblur="this.placeholder='First name'">
+    <input type="text" placeholder="Last Name" class="newlastname" minlength="1" maxlength="20" onfocus="this.placeholder =''" onblur="this.placeholder='Last name'">
+    <input type="password" placeholder="Password" class="newpassword" minlength="5" maxlength="100" id="newpwhide" onfocus="this.placeholder =''" onblur="this.placeholder='Password'">
+    <input type="password" placeholder="Retype Password" class="retypenewpw" minlength="5" maxlength="100" id="newrepwhide" onfocus="this.placeholder =''" onblur="this.placeholder='Retype Password'">
+    <input type="checkbox" id="onclickcreatepw" onclick='hideNewPW()'><text class="showcreatepwtxt">Show Password</text>
+    <input type="text" placeholder="Email Address" class="newemailaddress" minlength="1" maxlength="50" onfocus="this.placeholder =''" onblur="this.placeholder='Email Address'">
+    <input type="text" placeholder="Retype Email Address" class="retypeemail" minlength="1" maxlength="50" onfocus="this.placeholder =''" onblur="this.placeholder='Retype Email Address'">
+    <p class="pwreqtext">Your password requirs a minimum of 5 characters long. You must use at least one Uppercase, lowercase, one number and one special character.</p>
+    <form action="" method="POST" class="recaptcha">
+        <div class="g-recaptcha" data-sitekey="6LfoU3sUAAAAAGhGo6pBHk6kdmKb197mHdESWc6v"></div>
+    </form>
+    <input type="submit" id="newacctsubmitid" value="Submit" class="newacctsubmit">
+</div>
+<div class="forgotpwbox invisible">
+    <div class="backarrow3"><img src="https://s3.amazonaws.com/codecademy-content/courses/jquery/audit/images/right-arrow.svg" class="backarrow4"></div>
+    <p class="forgotbacktext">Back</p>
+    <div class="forgottitle">Password Retrieval</div>
+    <input type="text" placeholder="Last Name on the account" class="forgotlastname" minlength="1" maxlength="20" onfocus="this.placeholder =''" onblur="this.placeholder='Last Name on account'">
+    <input type="text" placeholder="Email Address" class="forgotemailaddress" minlength="1" maxlength="50" onfocus="this.placeholder =''" onblur="this.placeholder='Email Address'">
+    <form action="" class="recaptcha2">
+        <div class="g-recaptcha" data-sitekey="6LfoU3sUAAAAAGhGo6pBHk6kdmKb197mHdESWc6v"></div>
+    </form>
+    <input type="submit" value="Submit" class="forgotacctsubmit">
+</div>
+{% endif %}
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-Homepage.js') }}"></script>
+<script src="{{ url_for('static', filename='Effects-HomepageVerif.js') }}"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock specificscripts %}

@@ -1,0 +1,51 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='Styles-UserPortfolio.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+
+<div class="expandarrowloc">
+    <img src="../static/expandarrow.png" id="expandarrow">
+</div>
+
+<div class="leftusertable">
+    <table class="lefttab">
+        <tr class="leftusertableheader">
+            <th id="stockcol">Stock Ticker</th>
+            <th id="compcol">Company Name</th>
+            <th id="pricecol">Current Price ($)</th>
+            <th id="changecol">Change (%)</th>
+            <th id="shsflcol">Shares Float</th>
+            <th id="shsoutcol">Shares Outs.</th>
+            <th id="volcol">Volume</th>
+        </tr>
+    </table>
+    <div class="addstockboxloc">
+        <input type="text" id="addstockbox" placeholder="APPL, AMZN, or KO" maxlength="5" 
+        autocorrect="off" spellcheck="false" oninput="this.value = this.value.toUpperCase()" 
+        onfocus="this.placeholder =''" onblur="this.placeholder='AAPL, AMZN, KO'">
+        <input type="image" id="addstockbutton" src="../static/greenplussign.png">
+    </div>
+</div>
+
+<div class="rightusertable">
+    <table class="righttab">
+        <tr class="rightusertableheader">
+            <th id="datecol">Date Added</th>
+            <th id="purchasecol">Purchase Cost per Share ($)</th>
+            <th id="quantitycol">Quantity</th>
+            <th id="totalcol">Total Purchase ($)</th>
+            <th id="totgains">Total Gains</th>
+            <th id="gainscol">Gains %</th>
+            <th id="notescol">Notes</th>
+        </tr>
+    </table>
+</div>
+
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-UserPortfolio.js') }}"></script>
+{% endblock specificscripts %}

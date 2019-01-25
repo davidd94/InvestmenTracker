@@ -1,0 +1,305 @@
+
+    /* FINVIZ IFRAME NEWS */
+
+.finnewsbox {
+    grid-row: 3 / span 5;
+    grid-column: 4 / span 3;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgb(23, 32, 90);
+    background: #111845de;
+    height: 675px;
+    display: grid;
+    grid-template: 60px 30px 1fr / 1fr;
+    grid-gap: 0;
+}
+
+.newsheader {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    font-size: 40px;
+    margin: 0;
+    padding-top: 5px;
+    align-self: center;
+}
+
+.newslist {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    font-size: 16px;
+    align-self: center;
+    display: inline-block;
+}
+
+.newslist a {
+    margin-right: 40px;
+    margin-left: 40px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.finvizbox {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    height: 560px;
+    width: 680px;
+    margin-top: -10px;
+    align-self: center;
+    justify-self: center;
+    overflow: hidden;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.finvizbox:hover {
+    overflow-y: overlay;
+}
+
+.finviznews {
+    position: absolute;
+    width: 1400px;
+    height: 1900px;
+    top: -150px;
+    left: -10px;
+}
+
+
+    /* YAHOO WEBSCRAPED NEWS */
+
+.yahoonews {
+    display: none;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.yahoonews:hover {
+    overflow-y: overlay;
+}
+
+@-moz-document url-prefix() {
+    .yahoonews:hover {
+        overflow-y: scroll;
+    }
+}
+
+.yahoonews table {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 15px;
+    border-spacing: 0;
+    background-color: white;
+}
+
+.yahoonews td {
+    border: 0.5px solid grey;
+    height: 60px;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+}
+
+.yahoonews tr .yahoostockcol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 100px;
+    height: 40px;
+}
+
+.yahoonews tr .yahoodatecol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 100px;
+    height: 40px; 
+}
+
+.yahoonews tr .yahoonewscol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 450px;
+    height: 40px;
+}
+
+.yahootbody .yahoodate, .yahootbody .yahoostock {
+    color: black;
+}
+
+.yahootbody .yahoolink {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.yahoonews p {
+    margin-top: 200px;
+    font-size: 40px;
+    color: pink;
+}
+
+    /* GURUFOCUS WEBSCRAPED NEWS */
+
+.gurunews {
+    display: none;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 720px;
+    height: 570px;
+}
+
+.gurunews:hover {
+    overflow-y: overlay;
+}
+
+@-moz-document url-prefix() {
+    .gurunews:hover {
+        overflow-y: scroll;
+    }
+}
+
+.gurunews table {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 15px;
+    border-spacing: 0;
+    background-color: white;
+}
+
+.gurunews td {
+    border: 0.5px solid grey;
+    height: 60px;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+}
+
+@-moz-document url-prefix() {
+    .gurunews td {
+        border: 0.5px solid grey;
+        height: 60px;
+        font-family: Arial, 'Times New Roman';
+    }
+}
+
+.gurunews tr .gurustockcol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 100px;
+    height: 40px;
+}
+
+.gurunews tr .gurudatecol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 100px;
+    height: 40px;
+}
+
+.gurunews tr .gurunewscol {
+    font-size: 24px;
+    color: white;
+    background-color: #111845de;
+    font-weight: 800;
+    width: 450px;
+    height: 40px;
+}
+
+.gurutbody .gurudate, .gurutbody .gurustock {
+    color: black;
+}
+
+.gurutbody .gurulink {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* CUSTOM CHROME/SAFARI SCROLL BAR */
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+/* NEON BORDER EFFECTS */
+
+
+.finnewsbox:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: linear-gradient(120deg, #00F260, #0575E6, #00F260);
+    background-size: 300% 300%;
+    clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+}
+
+.finnewsbox:after {
+    animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 15% 0%;
+    }
+    50% {
+        background-position: 85% 100%;
+    }
+    100% {
+        background-position: 15% 0%;
+    }
+}
+
+@keyframes frame-enter {
+    0% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    25% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    50% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, 100% 0%, 0% 0%);
+    }
+    75% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 0%, 0% 0%);
+    }
+    100% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 0% 100%);
+    }
+}

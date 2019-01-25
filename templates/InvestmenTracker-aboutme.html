@@ -1,0 +1,80 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='Styles-AboutMe.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+<div class="aboutmebox in">
+    <h1>About Me</h1>
+    <h2>The Past, Present, and Future of my Programming Career</h2>
+    <div class="beginbio">
+        <p class="beginp1">Let's rewind a little bit. Before getting into programming, I have graduated with a Bachelor of Science in Civil Engineering in 2016 
+            and I have passed my EIT (Engineering in Training) test in the Civil Engineering category. Finally setting afoot into the real world, I was excited to start my career. Commencing my path, I worked for 
+            a small general contractor company while pursuring my Master of Science in Structural Engineering. Unfortunately, the company went bankrupt within 8 
+            months after my employment. At the same time my Master's program was put on hold due to the uncertainity and growing disinterest within my career.
+        </p>
+        <p class="beginp2">Before making any hasty career changes, it would be wise and fair to give this career one more opportunity to prove itself. Hence, my next 2 years 
+            of employment was with a real estate developer that primarily focuses on renovating and building new residential spec homes that ranges between $5-30 
+            million within the hillside of Hollywood Hills, Beverely Hills, Bel-Air, and West Hollywood Hills. It was a great experience working closely with engineers, 
+            architects and the CEO of my company on designs and budgeting. Although being surrounded with glamour, fame and fortune has made this job fascinating,
+            I still felt an emptiness... a void within my gut... a missing piece of the puzzle. My work was superb, the team was competent, and the company was excellent 
+            but beneath it all, Construction/Civil Engineer is not the missing puzzle piece that fuels my passion. I needed to do some soul search for a little bit.....
+        </p>
+        <p class="learntext">Learning Phase</p>
+        <img class="learnarrow" src="../static/RightBioArrow.png">
+    </div>
+    <div class="learnbio">
+        <p class="learnp1">In the time spent soul searching, I've initially looked into business, venture capitalist and private equity positions due to my interest/hobby in
+            stock investments. After a few humble conversations with a friend (who just started his programming career), he emphasized how programming is all about solving 
+            new and interesting problems everyday. That alone itself intrigued me... I've always had an interested in programming but never really gave it a chance. My justification 
+            was that if I already spend a good portion of my time in front of the computer for leisure... I shouldn't add more time on top of it. Abolishing the childish and naive 
+            justification, that I have established over 6 years ago, has created a new fork in my path.
+        </p>
+    
+        <p class="begintext">The Beginning</p>
+        <img class="beginarrow" src="../static/LeftBioArrow.png">
+        
+        <p class="learntext2">Learning Phase pt2</p>
+        <img class="learnarrow2" src="../static/RightBioArrow.png">
+    </div>
+    <div class="learnbio2">
+        <p class="learn2p1"> Now it's off to the races! Codecademy was the first step getting into programming. Between 8-10 hours was spent everyday for the first two weeks learning Python as my first 
+            language. It was a thrilling and fulfilling experience no doubt! I am set and in love with object oriented programming. Thereafter, CSS/HTML was completed in a few days. 
+            Back to python to complete linear data structures and Pandas (Data Analytics) for a few days. Javascript was next and completed in a week (given it was similar to 
+            python). jQuery was then completed in a week as well. Keep in mind that all these languages were completed by Codecademy (not a sponsor, I promise!) and by 
+            spending at least 8 hours daily. Lastly, I needed to learn a database to solidify my programming foundation to start on a project. There were a few options to choose from: 
+            SQLite, MySQL, PostgreSQL and MongoDB. I learned both SQL (SQLite) and non-SQL (MongoDB) databases to be exposed to both types. There were plans to start ReactJS but a senior 
+            programmer advised against it. It was strongly recommended to start my project as soon as possible with HTML/CSS, jQuery and python (the basics for web development). Essentially, I needed to 
+            learn how to crawl before walking.
+        </p>
+
+        <p class="backlearntext">Learning Phase</p>
+        <img class="backlearnarrow" src="../static/LeftBioArrow.png">
+        <p class="progtext">Programming & Future</p>
+        <img class="progarrow" src="../static/RightBioArrow.png">
+    </div>
+    <div class="progbio">
+        <p class="progp1">Pondering about my first programming project for a couple of days, I wanted to create a program that would be of interest to me, make my life easier, and at the same time 
+            expose myself to all layers of programming (frontend, backend, database, and web scraping). Being fond of stock investments, it sounded like a perfect plan to create a website 
+            to manage your own stock portfolio just like GuruFocus (but not as detailed). Thus, having the desired exposure and at the same time have my own personal stock portfolio 
+            manager! :) A win-win situation.
+            
+        </p>
+        <p class="progp2">Thus far, what I enjoyed the most in programming through tutorials and my first project is figuring out the solution to a problem. The beauty in it is that there is not just one 
+            but many solutions to a problem. It is astonishing what others and I could come up with for the solution. I guess that's the artistic aspect of programming. Programming sure does 
+            have more creativity compared to a Civil Engineer from my experience. As for the future, I will be starting my second project soon after this website is completed. Unsure of what yet, 
+            no doubt I am very excited to figure out what it would be. Completing my second project will pave the way to my first (web developer) programming job!  I am nothing but 
+            thrilled what the future will hold for me.
+        </p>
+
+        <p class="backlearntext2">Learning Phase pt2</p>
+        <img class="backlearnarrow2" src="../static/LeftBioArrow.png">
+    </div>
+</div>
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-AboutMe.js') }}"></script>
+{% endblock specificscripts %}

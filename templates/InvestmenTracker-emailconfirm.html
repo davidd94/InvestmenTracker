@@ -1,0 +1,61 @@
+{% extends "LayoutLoggedin.html" %}
+
+
+{% block specificstylesheet %}
+<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='Styles-EmailConfirmation.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
+{% endblock specificstylesheet %}
+
+
+{% block bodycontent %}
+
+{% if acct_status=='email_confirm' %}
+
+<div class="confirmemailbox">
+    <p class="confirmemailmsg">You have successfully confirmed your email !</p>
+    <p class="confirmemailmsg2">Redirecting to the homepage in a few moments...</p>
+</div>
+
+{% elif acct_status=='email_confirm_exp' %}
+
+<div class="reconfirmemailbox">
+    <p class="reconfirmemailmsg">Your email confirmation has expired !</p>
+    <a class="reconfirmemailmsg2" href="/reconfirm_email/{{ oldtoken }}">Click here to send a new email confirmation link.</a>
+    <p class="reconfirmemailmsg3">A new confirmation link has been sent to your email ! You will be redirected to the homepage shortly.</p>
+</div>
+
+{% elif acct_status=='pass_reset' %}
+<div class="passresetbox">
+    <p class="passresettext">Reset Password</p>
+    <div class="newpwform">
+        <div class="newpasstext">New Password:</div>
+        <input type="password" name="newpassword2" class="newpassinfo" id="hiddennewpw" placeholder="Enter your new password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter your new password'">
+        <div class="retypenewpasstext">Confirm New Password:</div>
+        <input type="password" name="retypenewpw2" class="retypenewpassinfo" placeholder="Retype your new password" onfocus="this.placeholder =''" onblur="this.placeholder='Retype your new password'">
+        <input type="checkbox" id="onclicknewpw" onclick='hideNewPW()'><text class="shownewpwtxt">Show Password</text>
+        <input type="submit" id="newpwsubmit" value="Submit">
+        <div class="newpwsuccessmsg">Your password has been successfully updated ! You will be redirected to the homepage in a few seconds...</div>
+    </div>
+</div>
+
+{% elif acct_status=='pass_reset_exp' %}
+<div class="passresetexpbox">
+    <p class="passresetexpmsg">The password reset link has expired ! <br><br><br><br>Please submit another password reset request through our homepage "Forgot Password" section.</p>
+    <p class="passresetexpmsg2">Redirecting to the homepage in a few seconds...</p>
+</div>
+
+{% endif %}
+
+{% endblock bodycontent %}
+
+
+{% block specificscripts %}
+{% if acct_status=='pass_reset_exp' or acct_status=='email_confirm' %}
+<script>    
+    window.setTimeout(function(){
+        window.location.replace('/');
+        }, 10000)
+</script>
+{% endif %}
+<script src="{{ url_for('static', filename='Effects-EmailConfirmation.js') }}"></script>
+{% endblock specificscripts %}

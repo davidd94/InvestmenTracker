@@ -1,0 +1,38 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Styles-ContactMe.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+<div class="contactmebox">
+    <div class="contactmeheader">
+        <h1>Contact Me</h1>
+    </div>
+    <div class="contactmeinnerbox">
+        <div class="contactmeform">
+            <img src="../static/commentbox.svg" class="commentboxpic">
+            <text class="contactmenametext">First Name</text>
+            <input type="text" class="contactmename" value='{{ username }}' autocomplete="off">
+            <text class="contactmeemailtext">Email</text>
+            <input type="email" class="contactmeemail" value='{{ useremail }}' autocomplete="off">
+            <text class="contactemailerror">Please use a valid email :)</text>
+            <textarea class="contactmefeedback" name="feedbackcomment" rows="5" cols="65" minlength="3" maxlength="500" placeholder="I would love to hear from you! :)"></textarea>
+            <div class="feedbackresponsebox">
+                <p class="feedbackresponse">Thank you for your feedback. I greatly appreciate it :)
+                    <br>Redirecting you to home shortly.</p>
+                <p class="feedbackresponse2">There was an error handling your feedback. Please try again later.</p>
+            </div>
+            <input type="submit" class="contactmesubmit" value="Submit Feedback">
+            <div class="contactrecaptchabox">
+                <div class="g-recaptcha" data-sitekey="6LfoU3sUAAAAAGhGo6pBHk6kdmKb197mHdESWc6v"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-ContactMe.js') }}"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock specificscripts %}

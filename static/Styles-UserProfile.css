@@ -1,0 +1,429 @@
+.profileinfobox {
+    grid-row: 3 / span 5;
+    grid-column: 4 / span 3;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    color: #ffffff;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgb(23, 32, 90);
+    background: #111845de;
+    height: 675px;
+    display: grid;
+    grid-template: 100px 1fr / 1fr;
+    grid-gap: 0;
+}
+
+.profileinfoheader {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    font-size: 40px;
+    margin-top: 0;
+    padding-top: 5px;
+    align-self: center;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.profileinputbox form {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template: repeat(12, 40px) 50px 1fr / 1fr repeat(3, 200px) 1fr;
+}
+
+.profileinputbox form input {
+    height: 20px;
+    width: 180px;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
+.profileinputbox p {
+    align-self: center;
+    justify-self: center;
+}
+
+.profileusernametext {
+    grid-row: 1 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profileusername {
+    grid-row: 2 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profilefirstnametext {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profilefirstname {
+    grid-row: 4 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profilelastnametext {
+    grid-row: 5 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profilelastname {
+    grid-row: 6 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.profileinputbox form span {
+    align-self: center;
+    text-align: right;
+    color: red;
+    font-size: 24px;
+}
+
+/* CURRENT & NEW EMAIL BOX */
+
+.profileemailbox {
+    grid-row: 7 / span 2;
+    grid-column: 2 / span 2;
+    display: grid;
+    grid-template: 1fr 1fr / 200px 200px;
+    overflow: hidden;
+}
+
+.profileemailtext {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    z-index: 200;
+    left: 0;
+    display: initial;
+}
+
+.profileemail {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    z-index: 200;
+    left: 0;
+    display: initial;
+}
+
+.profilenewemailtext {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    z-index: 100;
+    left: -100px;
+    display: none;
+}
+
+.profileemailreq {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+    padding-right: 21px;
+    padding-top: 5px;
+    transition: all 1500ms ease;
+    position: relative;
+    z-index: 100;
+    top: -200px;
+    display: none;
+}
+
+.profilenewemail {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    z-index: 100;
+    left: 0;
+    display: initial;
+}
+
+/* CONFIRM NEW EMAIL BOX */
+
+.profileemailbox2 {
+    grid-row: 7 / span 2;
+    grid-column: 4 / span 1;
+    display: grid;
+    grid-template: 1fr 1fr / 200px;
+    overflow: hidden;
+}
+
+.profilechangeemail {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    cursor: pointer;
+    transition: all 1500ms ease;
+    position: relative;
+    left: 0;
+    display: initial;
+    color: yellow;
+}
+
+.profilechangeemail:hover {
+    color: green;
+    text-decoration: underline;
+}
+
+
+.profilerenewemailtext {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -300px;
+    display: initial;
+}
+
+.profilerenewemail {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -300px;
+    display: initial;
+}
+
+.profileemailreq2 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    padding-right: 10px;
+    padding-top: 5px;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -500px;
+    display: initial;
+}
+
+
+/* NEW PASSWORD BOX */
+
+.profilepwbox {
+    grid-row: 9 / span 2;
+    grid-column: 3 / span 1;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr;
+    overflow: hidden;
+}
+
+.profilenewpasswordtext {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 2500ms ease;
+    position: relative;
+    top: -300px;
+    display: initial;
+}
+
+
+.profilenewpassword {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 2500ms ease;
+    position: relative;
+    top: -300px;
+    display: initial;
+}
+
+.profilepwreq {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    padding-right: 21px;
+    padding-top: 5px;
+    transition: all 2500ms ease;
+    position: relative;
+    top: -300px;
+    display: initial;
+}
+
+/* CONFIRM PASSWORD BOX */
+
+.profilepwbox2 {
+    grid-row: 9 / span 2;
+    grid-column: 4 / span 1;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr;
+    overflow: hidden;
+}
+
+.profilechangepw {
+    grid-row: 1 / span 2;
+    grid-column: 1 / span 1;
+    cursor: pointer;
+    transition: all 1500ms ease;
+    position: relative;
+    left: 0;
+    color: yellow;
+}
+
+.profilechangepw:hover {
+    color: green;
+    text-decoration: underline;
+}
+
+.profilerenewpwtext {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -300px;
+    display: initial;
+}
+
+.profilerenewpw {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -300px;
+    display: initial;
+}
+
+.profilepwreq2 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    padding-right: 12px;
+    padding-top: 5px;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -300px;
+    display: initial;
+}
+
+
+/* SUCCESS AND ERROR MSG BOX */
+.profileerrorbox {
+    grid-row: 11 / span 4;
+    grid-column: 3 / span 1;
+}
+
+.profileerrorbox ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+}
+
+.profileerrorbox ul li {
+    font-size: 14px;
+    text-align: center;
+}
+
+.profileerrorbox img {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    display: relative;
+    position: relative;
+    top: 4px;
+    left: -15px;
+    display: none;
+}
+
+
+/* SUBMIT BUTTONS */
+
+.profilesavesubmit {
+    grid-row: 13 / span 1;
+    grid-column: 2 / span 1;
+    height: 35px;
+    width: 100px;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-weight: 600;
+    outline: none;
+    transition: all 1500ms ease;
+    position: relative;
+    left: -400px;
+}
+
+.profileinputbox form .profilecancelsubmit {
+    grid-row: 13 / span 1;
+    grid-column: 4 / span 1;
+    height: 35px;
+    width: 100px;
+    align-self: center;
+    justify-self: center;
+    border-radius: 10px;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-weight: 600;
+    outline: none;
+}
+
+
+
+/* FIREFOX SPECIFIC STYLES */
+
+
+@supports (-moz-appearance:meterbar) {
+    .profileinputbox p {
+        font-family: 'Raleway', Arial, sans-serif;
+        font-weight: 600;
+    }
+}
+
+
+/* BORDER ANIMATION EFFECTS */
+
+
+.profileinfobox:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: linear-gradient(120deg, #00F260, #0575E6, #00F260);
+    background-size: 300% 300%;
+    clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+}
+
+.profileinfobox:after {
+    animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 15% 0%;
+    }
+    50% {
+        background-position: 85% 100%;
+    }
+    100% {
+        background-position: 15% 0%;
+    }
+}
+
+@keyframes frame-enter {
+    0% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    25% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    50% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, 100% 0%, 0% 0%);
+    }
+    75% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 0%, 0% 0%);
+    }
+    100% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 0% 100%);
+    }
+}
+
+
+
+
+@supports (-moz-appearance:meterbar) {
+    .profileinputbox p {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,48 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Styles-News.css') }}">
+{% endblock specificstylesheet %}
+
+
+{% block bodycontent %}
+<div class='finnewsbox'>
+    <h1 class='newsheader'>Financial News</h1>
+    <div class='newslist'>
+        <a class='finviznewslink'>Finviz</a>
+        <a class='yahoonewslink'>Yahoo</a>
+        <a class='gurunewslink'>GuruFocus</a>
+    </div>
+    <div class='finvizbox'>
+        <iframe class='finviznews' sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" width='400' height='400' src='https://finviz.com/news.ashx' allowfullscreen></iframe>
+    </div>
+    <div class='gurunews'>
+        <table>
+            <tbody class='gurutbody'>
+                <tr>
+                    <td class='gurustockcol'>Stocks</td>
+                    <td class='gurudatecol'>Date</td>
+                    <td class='gurunewscol'>News</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='yahoonews'>
+        <table>
+            <tbody class='yahootbody'>
+                <tr>
+                    <td class='yahoostockcol'>Stocks</td>
+                    <td class='yahoodatecol'>Date</td>
+                    <td class='yahoonewscol'>News</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Feature coming soon!</p>
+    </div>
+</div>
+
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-News.js') }}"></script>
+{% endblock specificscripts %}

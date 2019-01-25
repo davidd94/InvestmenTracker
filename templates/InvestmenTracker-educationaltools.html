@@ -1,0 +1,15 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Styles-Edutools.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+<div class='edutoolbox'>
+    <h1 class='eduheader'>COMING SOON</h1>
+</div>
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-Edutools.js') }}"></script>
+{% endblock specificscripts %}

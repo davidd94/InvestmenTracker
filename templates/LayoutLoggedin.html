@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if title %}
+        <title>InvestmenTracker - {{ title }}</title>
+    {% else %}
+        <title>InvestmenTracker - Personal Investments</title>
+    {% endif %}
+    <link href="https://fonts.googleapis.com/css?family=Charmonman:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Charmonman:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pattaya" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='Styles-Layout.css') }}">
+    {% block specificstylesheet %}{% endblock specificstylesheet%}
+</head>
+
+<body id="background" background="../static/NYSE.jpg">
+    <div class="gridlayout">
+        <header>
+                <text class="headertext1">Investmen</text><text class="headertext2">Tracker</text>
+                <img src="static\logo.jpg" class="headerlogo">
+        </header>
+        {% if title %}
+        <div class="profilebox">
+            <div class="profilescrollbox">
+                <img src="../static/user.svg" class="profileusericon">
+                <img src="../static/profilearrow.svg" class="profilearrowicon">
+                <input type="button" value="{{ title }}" id="profilescroll">
+            </div>
+            <div class="profilescrolldownbox">
+                <p class="profileinfo">Profile Info</p>
+                <p class="profileportfolio">Portfolio</p>
+                <p class="profilelogout">Log out</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="cornerloginbox">
+            <img src="../static/userlogin.svg" class="cornerloginicon">
+            <input type="submit" onclick="window.location='/';" value="Login" class="cornerloginbutton">
+        </div>
+        {% endif %}
+        <div class="infobar">
+            <ul class="infolist">
+                <li class="home">
+                    <button onclick="window.location='/';" class="homebutton">Homepage
+                        <img src="../static/home.svg" class="homeicon">
+                    </button>
+                </li>
+                {% if title %}
+                <li class="personalstocks">
+                    <button onclick="window.location='/userportfolio';" class="personalstockbutton">My Stock Portfolio
+                        <img src="../static/mystocks.png" class="stockicon">
+                    </button>
+                </li>
+                {% endif %}
+                <li class="news">
+                    <button onclick="window.location='/financialnews';" class="newsbutton">Financial News
+                        <img src="../static/dollar-sign.svg" class="newsicon">
+                    </button>
+                </li>
+                <li class="tools">
+                    <button onclick="window.location='/educationaltools';" type="button" class="educationalbutton">Educational Tools
+                        <img src="../static/hammer.svg" class="eduicon">
+                    </button>
+                </li>
+                <li class="aboutme">
+                    <button onclick="window.location='/aboutme';" type="button" class="aboutmebutton">About Me
+                            <img src="../static/child.svg" class="meicon">
+                    </button>
+                </li>
+                <li class="contacts">
+                    <button onclick="window.location='/contactme';" type="button" class="contactme">Contact
+                        <img src="../static/address-book.svg" class="contacticon">
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        {% block bodycontent %}{% endblock bodycontent %}
+
+
+        <footer>
+                <p>&copy; InvestmenTracker 2018</p>
+        </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='Effects-Layout.js') }}"></script>
+    {% block specificscripts %}{% endblock specificscripts %}
+
+</body>
+</html>

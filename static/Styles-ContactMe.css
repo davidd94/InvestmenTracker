@@ -1,0 +1,201 @@
+.contactmebox {
+    grid-row: 6 / span 2;
+    grid-column: 5 / span 3;
+    text-align: center;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.5);
+    background: rgb(31, 30, 30);
+    border: 5px solid rgb(168, 115, 115);
+    transform: translate(-50%, -50%);
+    height: 600px;
+    display: grid;
+    grid-template: 100px 1fr / 1fr;
+}
+
+.contactmeheader {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    border-radius: 5px;
+    align-self: center;
+}
+
+.contactmeheader h1 {
+    color: rgba(255, 13, 191, 0.8);
+    font-size: 40px;
+    font-family: "Josefin Sans", Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    display: inline-block;
+    padding: 5px 5px;
+}
+
+.contactmeinnerbox {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    background-color: rgb(31, 30, 30);
+    opacity: 0.85;
+    margin: 0 20px 20px 20px;
+}
+
+.contactmeform {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: 50px 50px 1fr 100px 50px / 1fr 1fr;
+}
+
+.contactmenametext {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    justify-self: left;
+    color: white;
+    font-family: "Josefin Sans", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    margin-left: -10px;
+    width: 100px;
+}
+
+.contactmename {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    justify-self: right;
+    text-align: center;
+    font-family: "Roboto", "Josefin Sans", Arial;
+    font-size: 16px;
+    outline: none;
+}
+
+.contactmeemailtext {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    justify-self: left;
+    color: white;
+    font-family: "Josefin Sans", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    margin-left: 10px;
+    margin-top: -5px;
+    width: 100px;
+}
+
+.contactmeemail {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    justify-self: right;
+    text-align: center;
+    font-family: "Roboto", "Josefin Sans", Arial;
+    font-size: 16px;
+    outline: none;
+    margin-top: -5px;
+}
+
+.commentboxpic {
+    grid-row: 1 / span 2;
+    grid-column: 2 / span 1;
+    width: 200px;
+    height: 110px;
+    margin: 7px 0 0 30px;
+    display: relative;
+    z-index: 101;
+    background-color: rgb(31, 30, 30);
+}
+
+.contactemailerror {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    justify-self: right;
+    text-align: center;
+    font-family: "Roboto", "Josefin Sans", Arial;
+    font-size: 14px;
+    color: red;
+    font-weight: 800;
+    transition: all 800ms ease-in;
+    margin: 60px -195px 0 0;
+    z-index: 100;
+}
+
+.contactmefeedback {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 2;
+    margin: 20px 40px 0 40px;
+    border: 3px solid black;
+    outline: none;
+}
+
+.contactrecaptchabox {
+    grid-row: 4 / span 1;
+    grid-column: 1 / span 2;
+    align-self: center;
+    justify-self: center;
+}
+
+.contactmesubmit {
+    grid-row: 5 / span 1;
+    grid-column: 1 / span 2;
+    align-self: center;
+    justify-self: center;
+    width: 30%;
+    height: 60%;
+    margin-bottom: 10px;
+}
+
+    /* AFTER-SUBMITTAL EFFECTS */
+
+.feedbackresponsebox {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 2;
+    visibility: visible;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 50px #fff,      /* inner white */
+        inset 20px 0 80px #f0f,   /* inner left magenta short */
+        inset -20px 0 80px #0ff,  /* inner right cyan short */
+        inset 20px 0 300px #f0f,  /* inner left magenta broad */
+        inset -20px 0 300px #0ff, /* inner right cyan broad */
+        0 0 50px #fff,            /* outer white */
+        -10px 0 80px #f0f,        /* outer left magenta */
+        10px 0 80px #0ff;         /* outer right cyan */
+    height: 50%;
+    width: 80%;
+    justify-self: center;
+    position: relative;
+    z-index: 500;
+    visibility: hidden;
+}
+
+.feedbackresponse {
+    text-align: center;
+    color: black;
+    font-family: "Roboto", "Josefin Sans", Helvetica, Arial;
+    font-weight: 800;
+    margin-top: 45px;
+    visibility: hidden;
+}
+
+.feedbackresponse2 {
+    text-align: center;
+    color: black;
+    font-family: "Roboto", "Josefin Sans", Helvetica, Arial;
+    font-weight: 800;
+    margin-top: 45px;
+    visibility: hidden;
+}
+
+
+/* FIREFOX SPECIFIC STYLES ADJUSTMENTS WITH DIFFERENCES FROM CHROME STYLES */
+
+@supports (-moz-appearance:meterbar) {
+    .contactmename, .contactmeemail {
+        width: 180px;
+    }
+
+    .contactemailerror {
+        margin: 60px -210px 0 0;
+    }
+}

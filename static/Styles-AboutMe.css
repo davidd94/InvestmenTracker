@@ -1,0 +1,427 @@
+.aboutmebox {
+    grid-row: 6 / span 2;
+    grid-column: 5 / span 3;
+    font-family: 'Lato', 'Josefin Sans', Arial;
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgb(23, 32, 90);
+    background: #111845de;
+    transform: translate(-50%, -50%);
+    height: 600px;
+    display: grid;
+    grid-template: 50px 70px 1fr / 1fr;
+}
+
+.aboutmebox:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.aboutmebox:hover:before {
+    left:-50%;
+    transform: skewX(-5deg);
+}
+
+.aboutmebox h1 {
+    font-weight: 600;
+    font-size: 40px;
+    text-transform: uppercase;
+    line-height: 15px;
+    text-decoration: underline;
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+}
+
+.aboutmebox h2 {
+    font-weight: 200;
+    font-size: 22px;
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+    position: relative;
+}
+
+/* THE BEGINNING BIO */
+
+.beginbio {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template: 200px 200px 100px / 250px 1fr 250px;
+    grid-row-gap: 0;
+    position: absolute;
+}
+
+.beginbio p {
+    font-weight: 200;
+    margin: 0 40px 0 40px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+.beginp1 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 3;
+    transition: all 3500ms ease;
+    left: 0;
+    text-indent: 35px;
+    font-size: 15px;
+    position: relative;
+}
+
+.beginp2 {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 3;
+    left: 0;
+    transition: all 3500ms ease;
+    position: relative;
+    font-size: 15px;
+    text-indent: 35px;
+}
+
+.learntext {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 1;
+    align-self: center;
+    width: 120px;
+    left: 40px;
+    top: 3px;
+    transition: all 3500ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+}
+
+.learnarrow {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 1;
+    align-self: center;
+    left: 200px;
+    top: 3px;
+    transition: all 3500ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+
+/* THE LEARNING PHASE BIO PT1 */
+
+.learnbio {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template: 200px 200px 50px / 1fr 1fr;
+    grid-row-gap: 0;
+    position: absolute;
+}
+
+.learnbio p {
+    font-weight: 200;
+    margin: 0 40px 0 40px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+.learnp1 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+    transition: all 3500ms ease;
+    text-indent: 35px;
+    font-size: 16px;
+    position: relative;
+    left: 800px;
+}
+
+.begintext {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    width: 110px;
+    left: 800px;
+    top: 27px;
+    transition: all 3000ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+    font-style: italic;
+}
+
+.beginarrow {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    left: 800px;
+    top: 25px;
+    transition: all 3000ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+.learntext2 {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+    align-self: center;
+    width: 155px;
+    left: 400px;
+    top: 24px;
+    transition: all 3500ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+}
+
+.learnarrow2 {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+    align-self: center;
+    left: 800px;
+    top: 25px;
+    transition: all 3500ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* LEARNING PHASE BIO PT2 */
+
+.learnbio2 {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template: 200px 200px 50px / 1fr 1fr;
+    grid-row-gap: 0;
+    position: absolute;
+}
+
+.learnbio2 p {
+    font-weight: 200;
+    margin: 0 40px 0 40px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+.learn2p1 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+    transition: all 3500ms ease;
+    text-indent: 35px;
+    font-size: 16px;
+    position: relative;
+    left: 800px;
+    font-style: italic;
+}
+
+.backlearntext {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    width: 120px;
+    left: 800px;
+    top: 27px;
+    transition: all 3000ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+    font-style: italic;
+}
+
+.backlearnarrow {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    left: 800px;
+    top: 25px;
+    transition: all 3000ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progtext {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+    align-self: center;
+    width: 170px;
+    left: 800px;
+    top: 24px;
+    transition: all 3500ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+}
+
+.progarrow {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+    align-self: center;
+    left: 800px;
+    top: 25px;
+    transition: all 3500ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* PROGRAMMING & FUTURE BIO SECTION */
+
+.progbio {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template: 200px 200px 50px / 1fr 1fr;
+    grid-row-gap: 0;
+    position: absolute;
+}
+
+.progbio p {
+    font-weight: 200;
+    margin: 0 40px 0 40px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+.progp1 {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+    transition: all 3500ms ease;
+    text-indent: 35px;
+    font-size: 16px;
+    position: relative;
+    left: 800px;
+    font-style: italic;
+}
+
+.progp2 {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+    transition: all 3500ms ease;
+    text-indent: 35px;
+    font-size: 16px;
+    position: relative;
+    left: 800px;
+    font-style: italic;
+    margin-top: -15px;
+}
+
+.backlearntext2 {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    width: 150px;
+    left: 800px;
+    top: 27px;
+    transition: all 3000ms ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Josefin Sans', Arial, 'Times New Roman';
+    font-weight: 800;
+    font-style: italic;
+}
+
+.backlearnarrow2 {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+    align-self: center;
+    left: 800px;
+    top: 25px;
+    transition: all 3000ms ease;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* ANIMATION EFFECTS */
+
+.aboutmebox:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: linear-gradient(120deg, #00F260, #0575E6, #00F260);
+    background-size: 300% 300%;
+    clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+}
+
+.aboutmebox.in:after {
+    animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+}
+
+    /* MOTION EFFECTS */
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 15% 0%;
+    }
+    50% {
+        background-position: 85% 100%;
+    }
+    100% {
+        background-position: 15% 0%;
+    }
+}
+      
+@keyframes frame-enter {
+    0% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px calc(100% - 3px), 3px 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    25% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 100% 100%, 100% 0%, 0% 0%);
+    }
+    50% {
+        clip-path: polygon(0% 100%, 3px 100%, 3px 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 3px, 100% 0%, 0% 0%);
+    }
+    75% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 3px, 3px 0%, 0% 0%);
+    }
+    100% {
+        -webkit-clip-path: polygon(0% 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 3px 100%, 0% 100%);
+    }
+}
+
+
+
+/* FIREFOX SPECIFIC STYLES ADJUSTMENTS WITH DIFFERENCES FROM CHROME STYLES */
+
+@supports (-moz-appearance:meterbar) {
+    .learntext {
+        font-family: 'Raleway', Arial, sans-serif;
+        width: 130px;
+        left: 30px;
+        top: 0;
+    }
+
+    .begintext, .learntext2, .backlearntext {
+        font-family: 'Raleway', Arial, sans-serif;
+        width: 130px;
+    }
+
+    .progtext, .backlearntext2 {
+        font-family: 'Raleway', Arial, sans-serif;
+        width: 170px;
+    }
+}

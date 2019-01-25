@@ -1,0 +1,56 @@
+{% extends "LayoutLoggedin.html" %}
+
+{% block specificstylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Styles-UserProfile.css') }}">
+{% endblock specificstylesheet %}
+
+{% block bodycontent %}
+<div class="profileinfobox">
+    <h1 class="profileinfoheader">Profile</h1>
+    <div class="profileinputbox">
+        <form action='/updateprofileinfo' method='POST'>
+            {{ form_name.hidden_tag() }}
+            <p class="profileusernametext">User Name:</p>
+            <input class="profileusername" value="{{ title }}" disabled="disabled">
+            <p class="profilefirstnametext">First Name:</p>
+            <input class="profilefirstname" type="text" name="newfirstname" value="{{ username }}" minlength="1" maxlength="20" autocomplete="off">
+            <p class="profilelastnametext">Last Name:</p>
+            <input class="profilelastname" name="newlastname" value="{{ lastname }}" minlength="1" maxlength="20" autocomplete="off">
+            <div class="profileemailbox">
+                <p class="profileemailtext">Current Email:</p>
+                <input class="profileemail" name="oldemail" value="{{ email }}" disabled="disabled">
+                <p class="profilenewemailtext">New Email:</p><span class="profileemailreq">*</span>
+                <input class="profilenewemail" name="newemail" minlength="1" maxlength="50" autocomplete="off" style="text-transform: lowercase" disabled="disabled">
+            </div>
+            <div class="profileemailbox2">
+                <p class="profilechangeemail">Need to change Email?</p>
+                <p class="profilerenewemailtext">Confirm New Email:</p><span class="profileemailreq2">*</span>
+                <input class="profilerenewemail" name="confirmemail" minlength="1" maxlength="50" autocomplete="off" style="text-transform: lowercase" disabled="disabled">
+            </div>
+            <div class="profilepwbox">
+                <p class="profilenewpasswordtext">New Password:</p><span class="profilepwreq">*</span>
+                <input class="profilenewpassword" name="newpw" type="password" minlength="1" maxlength="100" autocomplete="off" disabled="disabled">
+            </div>
+            <div class="profilepwbox2">
+                <p class="profilechangepw">and Password?</p>
+                <p class="profilerenewpwtext">Confirm Password:</p><span class="profilepwreq2">*</span>
+                <input class="profilerenewpw" name="confirmnewpw" type="password" minlength="1" maxlength="100" autocomplete="off" disabled="disabled">
+            </div>
+            <div class="profileerrorbox">
+                <ul>
+                    <li class="nameerror"><img class='nameerroricon' src='/static/successmark.png'>{{ form_name_error }}</li>
+                    <li class="emailerror"><img class='emailerroricon' src='/static/successmark.png'>{{ form_email_error }}</li>
+                    <li class="passerror"><img class='passerroricon' src='/static/successmark.png'>{{ form_pass_error }}</li>
+                </ul>
+            </div>
+            <button class="profilesavesubmit" type="submit">Save</button>
+            <input class="profilecancelsubmit" type="button" value="Cancel">
+        </form>
+    </div>
+</div>
+
+{% endblock bodycontent %}
+
+{% block specificscripts %}
+<script src="{{ url_for('static', filename='Effects-UserProfile.js') }}"></script>
+{% endblock specificscripts %}
