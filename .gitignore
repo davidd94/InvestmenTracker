@@ -1,0 +1,11 @@
+env
+flaskenv
+.env
+.flaskenv
+app.db
+*migrations
+*flask_session
+*logs
+*.vscode
+*__pycache__
+*DB Backups
