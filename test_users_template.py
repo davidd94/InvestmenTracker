@@ -1,6 +1,6 @@
 from app import create_app
 from config import Config
-from app.model.users import User
+from app.model.users import UserCustom
 
 from flask import Flask
 from pymongo import MongoClient
@@ -10,7 +10,7 @@ client = MongoClient()
 
 class TestConfig(Config):
     TESTING = True
-    MONGO_URI = 'http://localhost:27017'
+    MONGO_URI = 'mongodb://127.0.0.0:27017'
 
 class UserModelCase(unittest.TestCase):
     def setUp(self):
@@ -23,7 +23,7 @@ class UserModelCase(unittest.TestCase):
     
     def tearDown(self):
         print('tearing down tests...')
-        self.db.test_users.drop()
+        self.db.drop()
         self.app_context.pop()
 
     def test_create_user(self):
@@ -34,21 +34,29 @@ class UserModelCase(unittest.TestCase):
         # add users to mongoDB
         new_user1.add_user()
         new_user2.add_user()
-
-        # fetching saved user data from DB
-        user1 = self.db.find_one({'Username': self.test_users[0]})
-        user2 = self.db.find_one({'Username': self.test_users[1]})
         
-        self.assertEqual(user1['Username'], new_user1.user)
-        self.assertEqual(user2['Username'], new_user2.user)
+        self.assertEqual(new_user1.get_self()['Username'], new_user1.username)
+        self.assertEqual(new_user2.get_self()['Username'], new_user2.username)
 
     def test_remove_user(self):
         user = User(self.test_users[0], True)
-        user.remove_user()
-        check_user = user.get_user()
-
-        self.assertTrue(check_user)
+        user.add_user()
+        removed_user = user.remove_user()
+        
+        self.assertTrue(removed_user)
     
+    def test_update_user(self):
+        user = User(self.test_users[0], True)
+        user.add_user()
+        old_username = user.username
+        updated_user = user.update_user('New Name')
+        check_olduser = User.get_user(old_username, True)
+        print(check_olduser, updated_user)
+
+        self.assertTrue(updated_user)
+        self.assertTrue(user.get_self())
+        self.assertNotEqual(check_olduser, updated_user)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

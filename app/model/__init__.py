@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 
-bp = Blueprint('models', __name__)
+bp = Blueprint('model', __name__)
 
 
-from app.model import users
+from app.model import users, email
