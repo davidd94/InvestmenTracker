@@ -1,10 +1,12 @@
-from flask import session, current_app, redirect
+from flask import session, current_app, redirect, jsonify
 from itsdangerous import URLSafeSerializer
 
 from app.view.home_views import homepage
 from app.controller import bp
 from app.model.users import User
 from app.model.email import send_email
+from app.model.token import generate_token, verify_token
+from app.model.recaptcha import google_recaptchaV2
 
 
 @bp.route('/loginuser', methods=["POST"])
@@ -13,12 +15,12 @@ def userloggedin():
         userloginname = request.json['loginusername']
         userloginpw = request.json['loginuserpw']
         User.connect()
-        finduser = User.objects(username=userloginname).first()
+        finduser = User.get_user_by_username(userloginname)
 
         if (finduser):
-            userpwchk = User.hash_password(userloginpw)
+            hash_password = User.hash_password(userloginpw)
 
-            if (userpwchk == finduser['password'] and finduser['failed_login'] < 10):
+            if (hash_password == finduser['password'] and finduser['failed_login'] < 10):
                 if (finduser['acct_status'] == False):
                     return "Please confirm your account before logging in."
                 session['username'] = finduser['username']
@@ -28,11 +30,11 @@ def userloggedin():
                 finduser['failed_login'] = 0
                 finduser.save()
                 return jsonify("You have successfully logged in!")
-            elif (userpwchk != finduser['password']):
+            elif (hash_password != finduser['password']):
+                if (finduser['failed_login'] >= 10):
+                    return "Exceeded failed login attempts!"
                 finduser['failed_login'] += 1
                 finduser.save()
-                if (finduser['failed_login'] == 10):
-                    return "Exceeded failed login attempts!"
                 return "Invalid username/password!"        
 
         return "Invalid username/password!"
@@ -44,45 +46,34 @@ def userloggedout():
 
 @bp.route('/confirm_email/<token>', methods=['GET'])
 def confirm_email(token):
-    user = User.objects(token=token).first()
-    s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    user_email = verify_token(token, age=259200, salt='email-confirm')
+    user = User.objects(email=user_email).first()
+
     if (user):
-        try:
-            email = s.loads(token, salt='email-confirm', max_age=259200)
-
-            if (user['acct_status'] == False):
-                user['acct_status'] = True
-                user.save()
-                return render_template('InvestmenTracker-emailconfirm.html', acct_status=user['acct_status'])
-            else:
-                return redirect('/')
-
-        except Exception:
-            if (user['acct_status'] == False):
-                return render_template('InvestmenTracker-emailconfirm.html', acct_status=user['acct_status'], oldtoken=token)
-            else:
-                return redirect('/')
-    else:
+        if (user['acct_status'] == False):
+            user.update(acct_status=True)
+            user.reload()
+            return render_template('InvestmenTracker-emailconfirm.html', acct_status='email_confirm')
         return redirect('/')
-
+    
+    user = User.objects(token=token).first()
+    if (user):
+        return render_template('InvestmenTracker-emailconfirm.html', acct_status='email_confirm_exp')
+    return redirect('/')
 
 @bp.route('/reconfirm_email/<oldtoken>', methods=['GET','POST'])
 def resend_confirm_link(oldtoken):
-    s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     if (request.method == 'GET'):
-        user = User.objects(token=oldtoken).first()
-        usertoken = user['token']
-        useremail = user['email']
+        user = User.get_user_by_token(oldtoken)
 
-        if (usertoken and useremail):
-            newtoken = s.dumps(useremail, salt='email-confirm')
-
-            user['token'] = newtoken
+        if (user):
+            new_token = generate_token(user.email, salt='email-confirm')
+            user['token'] = new_token
             user.save()
 
             send_email(subject='InvestmenTracker Account Confirmation Link Renewal',
                         sender=current_app.config['MAIL_USERNAME'],
-                        recipient=useremail)
+                        recipient=user.email)
 
             time.sleep(5)
             return redirect('/')
@@ -107,71 +98,57 @@ def password_reset(token):
 @bp.route('/addnewuser', methods=["POST"])
 def adduser():
     newuserdata = {}
-    senddataback = ""
     s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     if request.method == "POST":
-        hashpass = bcrypt.hashpw(request.json['Password'].encode('utf-8'), bcrypt.gensalt())
         newuserdata['User Name'] = request.json['User Name']
         newuserdata['First Name'] = request.json['First Name']
         newuserdata['Last Name'] = request.json['Last Name']
-        newuserdata['Password'] = hashpass
+        newuserdata['Password'] = User.hash_password(request.json['Password'])
         newuserdata['Email'] = request.json['Email']
         recaptchadata = request.json['Recaptcha']
-
-        #2ND RECAPTCHA AUTHENTICATION (NOT REQUIRED) AS JAVASCRIPT AUTH SHOULD BE SUFFICIENT ENOUGH
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':'6LfoU3sUAAAAADg2saBK9l2otrKNNNKdCgqV32a9','response': recaptchadata}, timeout=10)
-        google_response = json.loads(r.text)    #CONVERTS GOOGLE'S RESPONSE
-
-    userdb = mongo.db.UserInfo
-    stockdb = mongo.db.UserStocks
-    finduser = userdb.find_one({'UserName' : newuserdata['User Name']})
-    findemail = userdb.find_one({'Email' : newuserdata['Email']})
-
-    if (finduser):
-        senddataback = "2"
-        return jsonify(senddataback)
-    elif (findemail):
-        senddataback = "3"
-        return jsonify(senddataback)
-    elif (google_response['success'] == False):     #2ND RECAPTCHA AUTHENTICATION (NOT REQUIRED)
-        return jsonify("Recaptcha authentication failed!")
-    else:
-        token = s.dumps(newuserdata['Email'], salt='email-confirm')
-        userdb.insert_one({
-            'UserName' : newuserdata['User Name'],
-            'FirstName' : newuserdata['First Name'],
-            'LastName' : newuserdata['Last Name'],
-            'Password' : newuserdata['Password'],
-            'Email' : newuserdata['Email'],
-            'Verified' : False,
-            'Token' : token,
-            'Login_attempts': 0,
-            })
-        stockdb.insert_one({
-            'UserName' : newuserdata['User Name'],
-            'Email' : newuserdata['Email'],
-            'StockLib' : [],
-        })
         
+        google_response = google_recaptchaV2(recaptchadata)
 
-        msg = Message(subject='InvestmenTracker Account Confirmation Link',
-        sender='InvestmenTracker1@gmail.com',
-        recipients=[newuserdata['Email']])
-        
+        #userdb = mongo.db.UserInfo
+        stockdb = mongo.db.UserStocks
+        find_user = User.objects(username=request.json['User Name']).first()
+        find_email = userdb.find_one({'Email' : newuserdata['Email']})
 
-        msg.html = """
-        <p>Mr./Ms./Mrs. %s<br>
-        <br>
-        Welcome! Thank you for signing up. I hope you will enjoy my simplistic stock portfolio manager.
-        For any issues or questions, please feel free to use the "Contact Me" page.
-        <br>
-        <br>
-        Please follow this link to activate your account: <a href="http://localhost:5000/confirm_email/%s">Click here to confirm your account</a></p>""" % (newuserdata['Last Name'], token)
+        if (find_user):
+            return jsonify("Username exists")
+        elif (find_email):
+            return jsonify("Email exists")
+        elif (google_response['success'] == False):
+            return jsonify("Recaptcha authentication failed!")
+        else:
+            token = generate_token(newuserdata['Email'], salt='email-confirm')
+            new_user = User(username=newuserdata['User Name'],
+                            firstname=newuserdata['First Name'],
+                            lastname=newuserdata['Last Name'],
+                            password=newuserdata['Password'],
+                            email=newuserdata['Email'],
+                            token=token)
+            validation_error = new_user.validate_self()
 
-        mail.send(msg)
+            if validation_error:
+                return jsonify(validation_error)
+            
+            new_user.save()
 
-        senddataback = "1"
-        return jsonify(senddataback)
+            """
+            stockdb.insert_one({
+                'UserName' : newuserdata['User Name'],
+                'Email' : newuserdata['Email'],
+                'StockLib' : [],
+            })"""
+            
+            send_email(sub='InvestmenTracker Account Confirmation Link',
+                        sender=current_app.config['MAIL_USERNAME'],
+                        recipient=newuserdata['Email'],
+                        email_type='acct_new',
+                        token=token)
+            
+            return jsonify("User created")
     
 
 @bp.route('/passrecovery', methods=['POST'])

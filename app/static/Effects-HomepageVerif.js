@@ -262,7 +262,7 @@ $(document).ready(() => {
                 contentType: 'application/json',
                 type: 'POST',
                 success: function(auth){
-                    if (auth === '1') {
+                    if (auth === 'User created') {
                         $('#success').css('top', '46px');
                         $('#incorrlogin').css('top', '150px');
                         $('#exemail').css('top', '150px');
@@ -270,13 +270,13 @@ $(document).ready(() => {
                         $('.newusername, .newfirstname, .newlastname, #newpwhide, #newrepwhide, .newemailaddress, .retypeemail').val("")
                         $('.newusername').css("border","1px solid black");
                         $('.newemailaddress').css("border","1px solid black");
-                    } else if (auth === '2') {
+                    } else if (auth === 'Username exists') {
                         $('#exname').css('top', '46px');
                         $('.newusername').css("border","1px solid red");
                         $('#incorrlogin').css('top', '150px');
                         $('#exemail').css('top', '150px');
                         $('#success').css('top', '150px');
-                    } else if (auth === '3') {
+                    } else if (auth === 'Email exists') {
                         $('#exemail').css('top', '46px');
                         $('.newemailaddress').css("border","1px solid red");
                         $('#incorrlogin').css('top', '150px');
@@ -284,8 +284,9 @@ $(document).ready(() => {
                         $('#success').css('top', '150px');
                     } else if (auth === 'Recaptcha authentication failed!') {
                         alert(auth);
-                    }
-                    else {
+                    } else if (auth === 'Failed to create user') {
+                        alert(auth)
+                    } else {
                         alert("SOMETHING WENT WRONG. PLEASE SEND A FEEDBACK THROUGH OUR CONTACT US PAGE.")
                     }
                 }

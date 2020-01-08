@@ -1,5 +1,9 @@
-from flask import session, current_app
+from flask import session, current_app, render_template, request
+from app.model.email import send_email
+from app.model.feedback import FeedbackModel
+from app.model.recaptcha import google_recaptchaV2
 from app.view import bp
+import json, requests, os
 
 
 @bp.route("/")
@@ -50,21 +54,29 @@ def feedback():
     feedbackemail = request.json['Email']
     feedbackcomment = request.json['Feedback']
     recaptchadata = request.json['Recaptcha']
-    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':'6LfoU3sUAAAAADg2saBK9l2otrKNNNKdCgqV32a9','response': recaptchadata}, timeout=10)
-    google_response = json.loads(r.text)    #CONVERTS GOOGLE'S RESPONSE
+    google_response = google_recaptchaV2(recaptchadata)
 
     if (google_response['success'] == True):
-        msg = Message(('InvestmenTracker Feedback from ' + feedbackname),
-        sender='investmentracker1@gmail.com',
-        recipients=['investmentracker1@gmail.com'])
+        subject = f'InvestmenTracker Feedback from {feedbackname}'
+        sender = current_app.config['MAIL_USERNAME']
+        recipient = current_app.config['MAIL_USERNAME']
         
-        msg.body = """
-        From: %s <%s>
-        %s
-        """ % (feedbackname, feedbackemail, feedbackcomment)
-
-        mail.send(msg)
-
-        return "Feedback Success"
-    else:
-        return "Feedback Failure"
+        # SAVE TO DB
+        feedback_data = FeedbackModel(email=feedbackemail,
+                                        firstname=feedbackname,
+                                        feedback=feedbackcomment)
+        
+        validation_errors = feedback_data.validate_self()
+        if validation_errors:
+            return str(validation_errors)
+        else:
+            feedback_data.connect()
+            feedback_data.save()
+            send_email(subject, sender, recipient, 'feedback',
+                        firstname=feedbackname,
+                        email=feedbackemail,
+                        feedback=feedbackcomment)
+            
+            return "Feedback Success"
+    
+    return "Feedback Failure"

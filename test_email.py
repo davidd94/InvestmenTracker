@@ -33,11 +33,17 @@ class EmailModelCase(unittest.TestCase):
         subject2 = 'Unit testing built-in func'
         sender = self.app.config['MAIL_USERNAME']
         recipient = self.app.config['MAIL_USERNAME']
+        acct_type = 'acct_new'
         test_token = 'this-is-just-a-test-token-for-unittest'
 
         with mail.record_messages() as outbox:
             # test imported send async email func
-            send_email(subject1, sender, recipient, test_token, self.app)
+            send_email(sub=subject1,
+                        sender=sender,
+                        recipient=recipient,
+                        email_type=acct_type, 
+                        token=test_token,
+                        app=self.app)
 
             # test lib built-in func
             mail.send_message(subject=subject2,

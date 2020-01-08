@@ -17,7 +17,7 @@ class UserModelCase(unittest.TestCase):
         print('setting up user test...')
         self.app = create_app(TestConfig)
         self.app_context = self.app.app_context()
-        self.db = client.InvestmenTracker['test_users']
+        self.db = client.InvestmenTracker['Users']
         self.test_users = ['Davie poo', 'Dennis Afk', 'Gilbert Desmond']
         self.app_context.push()
     
@@ -51,7 +51,6 @@ class UserModelCase(unittest.TestCase):
         old_username = user.username
         updated_user = user.update_user('New Name')
         check_olduser = User.get_user(old_username, True)
-        print(check_olduser, updated_user)
 
         self.assertTrue(updated_user)
         self.assertTrue(user.get_self())
