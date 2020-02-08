@@ -1,5 +1,4 @@
 from flask import session, current_app, redirect, jsonify, request, render_template
-from itsdangerous import URLSafeSerializer
 
 from app.view import bp
 from app.model.users import User
@@ -78,10 +77,8 @@ def resend_confirm_link(oldtoken):
 
 @bp.route('/pass_reset/<token>', methods=['GET'])
 def password_reset(token):
-    print(token)
     user_email = verify_token(token, age=259200, salt='password-reset')
     user = User.get_user_by_email(user_email)
-    print(user)
     if user:
         acct_status = 'pass_reset'
         return render_template('InvestmenTracker-emailconfirm.html', acct_status=acct_status, useremail=user.email)
@@ -111,7 +108,7 @@ def adduser():
     elif (find_email):
         return jsonify("Email exists")
     else:
-        token = generate_token(newuserdata['Email'], salt='email-confirm')
+        token = generate_token(new_email, salt='email-confirm')
         new_user = User(username=new_username,
                         firstname=new_firstname,
                         lastname=new_lastname,
@@ -126,12 +123,13 @@ def adduser():
             return jsonify(validation_error)
         
         # if pass validation, save user to DB
+        new_user.connect()
         new_user.save()
         new_user_stocks.save()
         
         send_email(sub='InvestmenTracker Account Confirmation Link',
                     sender=current_app.config['MAIL_USERNAME'],
-                    recipient=newuserdata['Email'],
+                    recipient=new_email,
                     email_type='acct_new',
                     token=token)
         
