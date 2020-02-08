@@ -151,6 +151,32 @@ class UserAuthModelCase(unittest.TestCase):
             user.reload()
             self.assertTrue(user.acct_status)
 
+    def test_pass_reset_request(self):
+        user = self.create_random_user()
+        email_salt = 'password-reset'
+        token_from_get_request = generate_token(user.email, email_salt)
+        email = verify_token(token_from_get_request, 100, email_salt)
+        
+        self.assertIsNotNone(email)
+
+    def test_pass_reset(self):
+        user = self.create_random_user()
+        incoming_post_data = {
+            'username': user.username,
+            'newpassword': 'newpass123'
+        }
+
+        new_hash_password = user.hash_password(incoming_post_data['newpassword'])
+
+        # check to see if new password does not match old one, if it does return an error
+        self.assertNotEqual(user.password, new_hash_password)
+
+        if new_hash_password != user.password:
+            user.update(password=new_hash_password)
+            user.reload()
+
+            self.assertEqual(user.password, new_hash_password)
+        
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

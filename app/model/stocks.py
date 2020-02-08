@@ -21,3 +21,15 @@ class Stocks(Document):
     @classmethod
     def disconnect(cls):
         disconnect()
+
+    @staticmethod
+    def get_userstocks_by_username(username, test=False):
+        Stocks.connect(test=test)
+        user_stocks = Stocks.objects(username=username).first()
+        return user_stocks if user_stocks else None
+
+    @staticmethod
+    def get_users_by_stockticker(stockticker, test=False):
+        Stocks.connect(test=test)
+        users = Stocks.objects(stocks__StockTicker=stockticker)
+        return users if users else None

@@ -132,8 +132,8 @@ class UserDocModelCase(unittest.TestCase):
     def create_random_user(self):
         user_number = len(self.test_users) - 1
 
-        new_random_user = Stocks(username=self.test_users[randint(0, user_number)]['username'],
-                        email=self.test_users[randint(0, user_number)]['email'],
+        new_random_user = Stocks(username=self.test_users[randint(1, user_number)]['username'],
+                        email=self.test_users[randint(1, user_number)]['email'],
                         stocks=[
                             self.test_stocks[randint(0,3)],
                             self.test_stocks[randint(4,6)],
@@ -172,16 +172,23 @@ class UserDocModelCase(unittest.TestCase):
         self.assertIsNone(existing_user_stock2)
 
         # insert new stocks for existing users using two DOM methods (mongoDB and mongoengine)
-        self.db.find_one_and_update({'username': new_user.username},
-                                                {'$push': 
-                                                    {'stocks': 
-                                                        {'$each': [add_stock, add_stock2]}
-                                                    }
-                                                })
+        add_stock_list = [add_stock, add_stock2]
+        for each_stock in add_stock_list:
+            # checks if stock is already in users profile
+            find_existing_stock = self.db.find_one({'username': new_user.username,
+                                                    'stocks.StockTicker': each_stock['StockTicker']})
+            # adds if doesn't exists else it should return an error in production code
+            if find_existing_stock is None:
+                self.db.find_one_and_update({'username': new_user.username},
+                                                        {'$push': 
+                                                            {'stocks': 
+                                                                {'$each': [each_stock]}
+                                                            }
+                                                        })
         new_user.update(push_all__stocks=[add_stock, add_stock4])
         #new_user.update(**{'push_all__stocks': [add_stock3, add_stock4]})
 
-        # find user viausing two DOM methods (mongoDB and mongoengine)
+        # find user via using two DOM methods (mongoDB and mongoengine)
         find_stock = self.db.find_one({'username': new_user.username, 'stocks.StockTicker': add_stock['StockTicker']})
 
         # test if users can be found using recently added stock data
@@ -191,6 +198,51 @@ class UserDocModelCase(unittest.TestCase):
         # test if each individually added stocks were actuall added
         self.assertEqual(find_stock['stocks'][6], add_stock4)
         self.assertEqual(find_stock['stocks'][4], add_stock2)
+
+    def test_find_users_and_stocks(self):
+        new_user = self.create_user()
+        new_user2 = self.create_random_user()
+        # stocks
+        add_stock = self.test_stocks[1]
+        add_stock2 = self.test_stocks[2]
+        add_stock3 = self.test_stocks[5]
+        add_stock4 = self.test_stocks[6]
+        # adding stocks
+        new_user.update(push_all__stocks=[add_stock, add_stock2, add_stock3, add_stock4])
+        new_user2.update(push_all__stocks=[add_stock, add_stock4])
+
+        # test if we can find user stock info by username
+        find_userstocks = self.db.find_one({'username': new_user.username})
+        self.assertEqual(new_user.username, find_userstocks['username'])
+
+        # test if we can find all users stock info by stock ticker
+        find_all_users_len = self.db.count_documents({'stocks.StockTicker': add_stock['StockTicker']})
+        self.assertEqual(find_all_users_len, 2)
+
+    def test_delete_stocks(self):
+        new_user = self.create_user()
+        stock_to_delete = self.test_stocks[0]['StockTicker']
+
+        self.db.find_one_and_update({'username': new_user.username,
+                                    'stocks.StockTicker': stock_to_delete},
+                                        {'$pull': 
+                                            {'stocks': {'StockTicker': stock_to_delete}}
+                                        }
+                                    )
+
+        saved_user = self.db.find_one({'username': new_user.username})
+        saved_stock = self.db.find_one({'username': new_user.username,
+                                        'stocks.StockTicker': self.test_stocks[4]['StockTicker']})
+        # two ways to delete stock using mongoDB and mongoengine
+        deleted_stock = self.db.find_one({'username': new_user.username,
+                                        'stocks.StockTicker': self.test_stocks[0]['StockTicker']})
+        """deleted_stock = new_user.update(pull__stocks__StockTicker=self.test_stocks[0]['StockTicker'])
+        new_user.reload()"""
+
+        self.assertIsNotNone(saved_user)
+        self.assertIsNotNone(saved_stock)
+        self.assertIsNone(deleted_stock)
+        #self.assertEqual(deleted_stock, 1)
 
 
 if __name__ == "__main__":

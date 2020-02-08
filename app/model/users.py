@@ -62,13 +62,19 @@ class User(Document):
     def get_user_by_username(username, test=False):
         User.connect(test=test)
         user = User.objects(username=username).first()
-        return user if user else False
+        return user if user else None
+
+    @staticmethod
+    def get_user_by_email(email, test=False):
+        User.connect(test=test)
+        user = User.objects(email=email).first()
+        return user if user else None
 
     @staticmethod
     def get_user_by_token(token, test=False):
         User.connect(test=test)
         user = User.objects(token=token).first()
-        return user if user else False
+        return user if user else None
 
 class UserCustom:
     def __init__(self, username, test=False):

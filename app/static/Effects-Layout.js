@@ -94,7 +94,7 @@ $(document).ready(() => {
     $('.profilelogout').on('click', () => {
         $.ajax({
             url: '/loggedout',
-            type: 'POST',
+            type: 'GET',
             success: function(response) {
                 $('.profilescrolldownbox').slideUp("fast");
                 $('.profilebox').css({"z-index" : "1"});

@@ -20,18 +20,21 @@ def send_email(sub, sender, recipient, email_type, token=None, app=None, **kwarg
     cur_app = app if app else current_app._get_current_object()
     email_html = email_type or None
     user = session if cur_app is current_app else None
-    url_domain = 'https://investmentracker.info/confirm_email' if cur_app.config['TESTING'] is False \
-                                                                else 'http://localhost:5000/confirm_email'
+    url_domain = 'https://investmentracker.info/' if cur_app.config['TESTING'] is False \
+                                                    else 'http://localhost:5000/'
     
     if email_type is 'acct_new':
         email_html = 'emails/acct_new.html'
-        msg.html = render_template(email_html, user=user, url_domain=url_domain, token=token)
+        full_url = url_domain + 'confirm_email'
+        msg.html = render_template(email_html, user=user, url_domain=full_url, token=token)
     elif email_type is 'acct_confirm':
         email_html = 'emails/acct_confirm.html'
-        msg.html = render_template(email_html, user=user, url_domain=url_domain, token=token)
+        full_url = url_domain + 'reconfirm_email'
+        msg.html = render_template(email_html, user=user, url_domain=full_url, token=token)
     elif email_type is 'pass_recovery':
         email_html = 'emails/pass_recovery.html'
-        msg.html = render_template(email_html, user=user, url_domain=url_domain, token=token)
+        full_url = url_domain + 'pass_reset'
+        msg.html = render_template(email_html, user=user, url_domain=full_url, token=token)
     elif email_type is 'feedback':
         email_html = 'emails/feedback.html'
         msg.html = render_template(email_html, user=kwargs)

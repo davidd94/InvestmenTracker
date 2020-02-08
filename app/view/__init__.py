@@ -4,4 +4,4 @@ from flask import Blueprint
 bp = Blueprint('views', __name__)
 
 
-from app.view import user_views, home_views
+from app.view import home_views, user_views, user_stock_views

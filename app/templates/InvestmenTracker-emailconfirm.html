@@ -28,6 +28,7 @@
 <div class="passresetbox">
     <p class="passresettext">Reset Password</p>
     <div class="newpwform">
+        <input type="hidden" id="useremail" value="{{ useremail }}">
         <div class="newpasstext">New Password:</div>
         <input type="password" name="newpassword2" class="newpassinfo" id="hiddennewpw" placeholder="Enter your new password" onfocus="this.placeholder=''" onblur="this.placeholder='Enter your new password'">
         <div class="retypenewpasstext">Confirm New Password:</div>

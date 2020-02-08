@@ -13,6 +13,7 @@ $(document).ready(() => {
     $('#newpwsubmit').on('click', (event) => {
         let newpassword = document.getElementsByClassName('newpassinfo')[0].value;
         let renewpass = document.getElementsByClassName('retypenewpassinfo')[0].value;
+        let email = $('#useremail')[0].value;
         
         if (newpassword.length < 5 || (specialCharChk(newpassword) === false) || (hasLowerCase(newpassword) === false) || (hasUpperCase(newpassword) === false)) {
             $('.newpassinfo').css("border","1px solid red");
@@ -30,12 +31,15 @@ $(document).ready(() => {
         } else {
             $('.retypenewpassinfo').css("border","1px solid black");
             var retypenewpwverified = 1;
-            verifiednewpassword2 = {'newpwreset' : renewpass};
+            var data = {
+                'useremail' : email,
+                'newpwreset' : renewpass
+            };
 
             if (new_pw_verif == 1 && retypenewpwverified == 1) {
                 $.ajax({
                 url: '/replaceoldpw',
-                data: JSON.stringify(verifiednewpassword2),
+                data: JSON.stringify(data),
                 contentType: 'application/json',
                 type: 'POST',
                 success: function(response) {
