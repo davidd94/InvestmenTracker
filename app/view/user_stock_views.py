@@ -1,5 +1,5 @@
 from flask import session, current_app, redirect, jsonify, request, render_template
-
+from app import mongo
 from app.view import bp
 from app.model.users import User
 from app.model.stocks import Stocks
@@ -14,7 +14,7 @@ def storestocks():
         'StockTicker': stockname,
         'StockData': {
             'date': stockdate,
-            'purchase': 0,
+            'cost': 0,
             'qty': 0,
             'notes': ''
         }
@@ -42,19 +42,19 @@ def deletestocks():
     username = session['username']
 
     user_data = Stocks.get_userstocks_by_username(username)
-    stockliblength = len(finduser['StockLib'])
+    stockliblength = len(user_data['stocks'])
     foundexistingstock = False
     
     for count in range(stockliblength):    #LOOPS EACH USER'S STOCK IN LIBRARY TO LOCATE THE SPECIFIC GIVEN STOCK NAME
-        findexistingstock = finduser['StockLib'][count]['StockSym']
+        findexistingstock = user_data['stocks'][count]['StockTicker']
         if (findexistingstock == stockname):
             foundexistingstock = True
             stockid = count
     
     if (foundexistingstock == True):
-        userstockdb.update_one({'UserName' : username}, {'$pull' : {'StockLib' : {'StockSym' : stockname}}})
+        userstockdb.update_one({'username' : username}, {'$pull' : {'stocks' : {'StockTicker' : stockname}}})
         return jsonify("You have successfully deleted a stock!")
-    elif (finduser == None):
+    elif (user_data == None):
         return jsonify("No user info has been found!")
     
     return jsonify("Deleted temporary stock info!")
@@ -64,10 +64,9 @@ def deletestocks():
 def getstocks():
     if 'username' in session:
         username = session['username']
-        userstockdb = mongo.db.UserStocks
-        finduser = userstockdb.find_one({'UserName' : username})
-        stocklib = finduser['StockLib']
-
+        userstockdb = mongo.db.Stocks
+        finduser = userstockdb.find_one({'username' : username})
+        stocklib = finduser['stocks']
         return jsonify(stocklib)
 
 
@@ -78,28 +77,28 @@ def updatestocks():
     edittype = request.json['EditType']
     updatevalue = request.json['Value']
     
-    userstockdb = mongo.db.UserStocks
-    finduser = userstockdb.find_one({'UserName' : username})
-    stockliblength = len(finduser['StockLib'])
+    userstockdb = mongo.db.Stocks
+    finduser = userstockdb.find_one({'username' : username})
+    stockliblength = len(finduser['stocks'])
 
     for count in range(stockliblength):    #LOOPS EACH USER'S STOCK IN LIBRARY TO FIND THE DESIRED STOCK
-        findexistingstock = finduser['StockLib'][count]['StockSym']
+        findexistingstock = finduser['stocks'][count]['StockTicker']
         if (findexistingstock == stockname):
             stocknum = count
             
-    if (finduser):
-        if (edittype == "Date"):
-            userstockdb.update_one({'UserName' : username}, {'$set' : {('StockLib.' + str(stocknum) + '.StockData.Date') :  updatevalue}})
-            return "Date updated!!"
-        elif (edittype == "PurchaseCost"):
-            userstockdb.update_one({'UserName' : username}, {'$set' : {('StockLib.' + str(stocknum) + '.StockData.PurchaseCost') :  float(updatevalue)}})
-            return "Purchase Cost updated!!"
-        elif (edittype == "Quantity"):
-            userstockdb.update_one({'UserName' : username}, {'$set' : {('StockLib.' + str(stocknum) + '.StockData.Quantity') :  float(updatevalue)}})
-            return "Quantity updated!!"
-        elif (edittype == "Notes"):
-            userstockdb.update_one({'UserName' : username}, {'$set' : {('StockLib.' + str(stocknum) + '.StockData.Notes') :  updatevalue}})
-            return "Notes updated!!"
+        if (finduser):
+            if (edittype == "Date"):
+                userstockdb.update_one({'username' : username}, {'$set' : {('stocks.' + str(stocknum) + '.StockData.date') :  updatevalue}})
+                return "Date updated!!"
+            elif (edittype == "PurchaseCost"):
+                userstockdb.update_one({'username' : username}, {'$set' : {('stocks.' + str(stocknum) + '.StockData.cost') :  float(updatevalue)}})
+                return "Purchase Cost updated!!"
+            elif (edittype == "Quantity"):
+                userstockdb.update_one({'username' : username}, {'$set' : {('stocks.' + str(stocknum) + '.StockData.qty') :  float(updatevalue)}})
+                return "Quantity updated!!"
+            elif (edittype == "Notes"):
+                userstockdb.update_one({'username' : username}, {'$set' : {('stocks.' + str(stocknum) + '.StockData.notes') :  updatevalue}})
+                return "Notes updated!!"
     else:
         return jsonify("NO STOCK INFO WAS UPDATED!")
     

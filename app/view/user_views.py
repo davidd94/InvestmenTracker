@@ -1,11 +1,13 @@
 from flask import session, current_app, redirect, jsonify, request, render_template
 
+from app import mongo
 from app.view import bp
 from app.model.users import User
 from app.model.stocks import Stocks
 from app.model.email import send_email
 from app.model.token import generate_token, verify_token
 from app.model.recaptcha import google_recaptchaV2
+from app.model.validators import ValidateName, ValidateEmail, ValidatePass
 
 
 @bp.route('/loginuser', methods=["POST"])
@@ -168,3 +170,129 @@ def replacepw():
         return ('error')
     
     return render_template('InvestmenTracker-emailconfirm.html', acct_status='pass_reset_exp')
+
+
+@bp.route('/userprofile')
+def profile():
+    try:
+        if 'username' in session:
+            userdb = mongo.db.Users
+            finduser = userdb.find_one({'username': session['username']})
+            userlastname = finduser['lastname']
+            form_name = ValidateName()
+            form_email = ValidateEmail()
+            form_pass = ValidatePass()
+        
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'],
+                                                                        firstname=finduser['firstname'],
+                                                                        lastname=userlastname,
+                                                                        email=session['email'],
+                                                                        form_name=form_name,
+                                                                        form_email=form_email,
+                                                                        form_pass=form_pass)
+    except:
+        return redirect('/')
+    
+
+@bp.route('/updateprofileinfo', methods=['POST'])
+def updateinfo():
+    try:
+        username = session['username']
+        oldfirstname = session['firstname']
+        oldlastname = session['lastname']
+        oldemail = session['email']
+        updatefirstname = request.form['newfirstname']
+        updatelastname = request.form['newlastname']
+        updateemail = (request.form['newemail']).lower()
+        confirmemail = (request.form['confirmemail']).lower()
+        updatepw = request.form['newpw']
+        confirmpw = request.form['confirmnewpw']
+
+        userdb = mongo.db.Users
+        finduser = userdb.find_one({'Username' : username})
+
+        formname = ValidateName(request.form)
+        formemail = ValidateEmail(request.form)
+        formpass = ValidatePass(request.form)
+
+        form_name = ValidateName()
+        form_email = ValidateEmail()
+        form_pass = ValidatePass()
+
+        if (updatefirstname == "" and updatelastname == ""):
+            form_name_error = "You have left your name empty :("
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error)
+
+        if (updatefirstname or updatelastname):     #VALIDATES IF NAME CHANGE OCCURS
+            if formname.validate():
+                if (oldfirstname == updatefirstname and oldlastname == updatelastname):     #NO NAME CHANGES MADE
+                    if (formname.errors):
+                        form_name_error = formname.errors
+                    else:
+                        form_name_error = ""
+                elif (oldfirstname != updatefirstname and oldlastname == updatelastname):       #FIRST NAME CHANGES MADE
+                    if (formname.errors):
+                        form_name_error = formname.errors
+                    else:
+                        userdb.update_one({'username' : username}, {'$set': {'firstname' : updatefirstname}})
+                        session['firstname'] = updatefirstname
+                        form_name_error = "Successfully updated your first name!"
+                elif (oldfirstname == updatefirstname and oldlastname != updatelastname):       #LAST NAME CHANGES MADE
+                    if (formname.errors):
+                        form_name_error = formname.errors
+                    else:
+                        userdb.update_one({'username' : username}, {'$set': {'lastname' : updatelastname}})
+                        session['lastname'] = updatelastname
+                        form_name_error = "Successfully updated your last name!"
+                elif (oldfirstname != updatefirstname and oldlastname != updatelastname):       #FIRST AND LAST NAME CHANGES MADE
+                    if (formname.errors):
+                        form_name_error = formname.errors
+                    else:
+                        userdb.update_one({'username' : username}, {'$set': {'firstname' : updatefirstname}})
+                        userdb.update_one({'username' : username}, {'$set': {'lastname' : updatelastname}})
+                        session['firstname'] = updatefirstname
+                        session['lastname'] = updatelastname
+                        form_name_error = "Successfully updated your first and last name!"
+            else:
+                form_name_error = "You have left your name empty :("
+                return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error)
+
+        if (confirmemail):       #VALIDATES IF EMAIL CHANGE OCCURS
+            if formemail.validate():
+                finduserbyemail = userdb.find_one({'email' : confirmemail})
+                if (finduserbyemail):
+                    form_email_error = "That email already exist. Please use another email."
+                    return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_email_error=form_email_error)
+                else:
+                    userdb.update_one({'username' : username}, {'$set': {'email' : confirmemail}})
+                    session['email'] = confirmemail
+                    form_email_error = "Successfully updated your email address!"
+            else:
+                form_email_error = "You must enter a valid email and/or your emails do not match."
+                return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_email_error=form_email_error)
+
+        if (confirmpw):          #VALIDATES IF PASSWORD CHANGE OCCURS
+            if formpass.validate():
+                hashupdatedpass = bcrypt.hashpw(confirmpw.encode('utf-8'), bcrypt.gensalt())
+                userdb.update_one({'username' : username}, {'$set': {'password' : hashupdatedpass}})
+                form_pass_error = "Successfully updated your password!"
+            else:
+                form_pass_error = "Your password must be a minimum of 5 characters long and contain at least one uppercase, lowercase, number AND special character."
+                if (confirmemail):
+                    return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_email_error=form_email_error, form_pass_error=form_pass_error)
+                else:
+                    return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_pass_error=form_pass_error)
+        
+        if (updatefirstname or updatelastname) and confirmemail and confirmpw:      #DISPLAYS SUCCESS/ERROR MSG BASED ON WHAT IS UPDATED
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_email_error=form_email_error, form_pass_error=form_pass_error)
+        elif (updatefirstname or updatelastname) and confirmemail:
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_email_error=form_email_error)
+        elif (updatefirstname or updatelastname) and confirmpw:
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error, form_pass_error=form_pass_error)
+        elif (updatefirstname or updatelastname):
+            return render_template('InvestmenTracker-userprofile.html', title=session['username'], firstname=session['firstname'], lastname=session['lastname'], email=session['email'], form_name=form_name, form_email=form_email, form_pass=form_pass, form_name_error=form_name_error)
+        else:
+            return redirect('/')
+    
+    except Exception:
+        return redirect('/')

@@ -75,14 +75,14 @@ $(document).ready(() => {
 
             for (i = 0 ; i < stockliblength ; i++) {
                 let stocklib = response[i];
-                let stockticker = stocklib['StockSym'];
+                let stockticker = stocklib['StockTicker'];
                 allstocks.push(stockticker);
 
-                let stockdate = stocklib['StockData']['Date'];
-                let purchase = Number(stocklib['StockData']['PurchaseCost']);
-                let quantity = Number(stocklib['StockData']['Quantity']);
+                let stockdate = stocklib['StockData']['date'];
+                let purchase = Number(stocklib['StockData']['cost']);
+                let quantity = Number(stocklib['StockData']['qty']);
                 let totalval = (purchase * quantity).toFixed(2);
-                let notes = stocklib['StockData']['Notes'];
+                let notes = stocklib['StockData']['notes'];
 
                 if (totalval > 0) {
                     $('#createdtotal' + stockticker).css('color','green');
